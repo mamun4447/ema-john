@@ -4,14 +4,16 @@ const Cart = ({ carts }) => {
   //   console.log(carts);
 
   let price = 0;
-  console.log(carts);
+  // console.log(carts);
   let shipping = 0;
+  let quantity = 0;
   for (const product of carts) {
-    price = price + product.price;
-    shipping = shipping + product.shipping;
+    quantity = quantity + parseInt(product.quantity);
+    price = price + parseFloat(product.price) * parseInt(quantity);
+    shipping = shipping + parseFloat(product.shipping);
   }
   let tax = ((price / 100) * 3).toFixed(2);
-  const total = parseFloat(price) + parseFloat(shipping) + parseFloat(tax);
+  const total = price + shipping + parseFloat(tax);
   return (
     <div className="static">
       <h1 className="text-xl py-3">Order Summary</h1>
