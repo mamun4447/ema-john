@@ -1,13 +1,47 @@
 // import logo from './logo.svg';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
+import Inventory from "./components/Inventory/Inventory";
+import Order from "./components/Order/Order";
 import Shop from "./components/Shop/Shop";
+import Main from "./layout/Main";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main />,
+      children: [
+        {
+          path: "/",
+          loader: () => fetch("products.json"),
+          element: <Shop />,
+        },
+        {
+          path: "shop",
+          loader: () => fetch("products.json"),
+          element: <Shop />,
+        },
+        {
+          path: "order",
+          loader: () => fetch("products.json"),
+          element: <Order />,
+        },
+        {
+          path: "inventory",
+          loader: () => fetch("products.json"),
+          element: <Inventory />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <div>Oops! There is an error!</div>,
+    },
+  ]);
   return (
     <div className="App">
-      <Navbar />
-      <Shop />
+      <RouterProvider router={router} />
     </div>
   );
 }
