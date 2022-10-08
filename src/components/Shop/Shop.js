@@ -5,63 +5,55 @@ import Cart from "../Cart/Cart";
 import Product from "../Products/Product";
 
 const Shop = () => {
-  // const [products, setProducts] = useState([]);
   const products = useLoaderData();
-  // console.log(products);
-  const [carts, setCart] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("products.json").then((res) => res.json());
-  //   // .then((data) => setProducts(data));
-  //   // console.log(products);
-  // }, []);
-
+  const [cart, setCart] = useState([]);
   useEffect(() => {
     const storedCart = getStoredCart();
-    const saveCart = [];
+    const savedCart = [];
     for (const id in storedCart) {
-      // console.log(id);
       const addedProduct = products.find((product) => product.id === id);
-      // console.log(addedProduct);
       if (addedProduct) {
-        const quantity = saveCart[id];
+        const quantity = storedCart[id];
         addedProduct.quantity = quantity;
-        saveCart.push(addedProduct);
+        savedCart.push(addedProduct);
       }
     }
-    setCart(saveCart);
+    setCart(savedCart);
   }, [products]);
 
-  const addToCart = (selectProduct) => {
-    // console.log(product);
+  const handleAddToCart = (selectedProduct) => {
+    console.log(selectedProduct);
     let newCart = [];
-    const exist = carts.find((product) => product.id === selectProduct.id);
-    if (!exist) {
-      selectProduct.quantity = 1;
-
-      newCart = [...carts, selectProduct];
+    const exists = cart.find((product) => product.id === selectedProduct.id);
+    if (!exists) {
+      selectedProduct.quantity = 1;
+      newCart = [...cart, selectedProduct];
     } else {
-      const rest = carts.filter((product) => product.id !== selectProduct.id);
-      exist.quantity += 1;
-      newCart = [...rest, selectProduct];
+      const rest = cart.filter((product) => product.id !== selectedProduct.id);
+      exists.quantity = exists.quantity + 1;
+      newCart = [...rest, exists];
     }
+
     setCart(newCart);
-    // console.log(newCart);
-    addToDb(selectProduct.id);
+    addToDb(selectedProduct.id);
   };
-  // console.log(cart);
 
   return (
     <div className="grid grid-cols-5 gap-4 mt-10 container mx-auto">
       {/* card  */}
       <div className="col-span-4 grid grid-cols-3 gap-2 ">
         {products.map((product) => (
-          <Product key={product.id} product={product} addToCart={addToCart} />
+          <Product
+            key={product.id}
+            product={product}
+            addToCart={handleAddToCart}
+          />
         ))}
       </div>
       {/* summary  */}
-      <div className="border max-h-[600px] rounded bg-red-100 sticky top-3">
-        <Cart carts={carts} />
+      <div className="border max-h-[600px] rounded bg-red-100 sticky top-3 text-center">
+        <Cart cart={cart} />
       </div>
     </div>
   );
