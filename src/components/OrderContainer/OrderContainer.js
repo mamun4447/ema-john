@@ -15,6 +15,7 @@ const OrderContainer = ({ cart, handleRemoveItem }) => {
           <p>Total Price: {price * quantity}</p>
           <p>Quantity: {quantity}</p>
         </div>
+
         <button onClick={() => handleRemoveItem(id)}>Delete</button>
       </div>
     </div>

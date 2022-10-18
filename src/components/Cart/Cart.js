@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Cart = ({ cart, clearCart, children }) => {
   // console.log(carts[0].shipping);
@@ -31,11 +32,10 @@ const Cart = ({ cart, clearCart, children }) => {
         Clear Cart
       </button>
       {children}
-      <button className="btn btn-primary mb-10" type="">
+      <Link to="/order" className="btn btn-primary mb-10" type="">
         Review Order
-      </button>
+      </Link>
     </div>
   );
-};;;;;;;;;;;;;
-
+};
 export default Cart;
