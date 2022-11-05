@@ -7,7 +7,7 @@ const OrderContainer = ({ cart, handleRemoveItem }) => {
   return (
     <div className="px-3 grid grid-cols-5 gap-3 border h-52 items-center rounded mb-2 shadow">
       <div>
-        <img className="w-full" src={img} alt="" />
+        <img className=" py-2 h-48" src={img} alt="" />
       </div>
       <div className="col-span-4 flex items-center justify-between mx-3">
         <div>
